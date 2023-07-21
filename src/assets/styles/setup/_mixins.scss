@@ -1,0 +1,56 @@
+/* Media queries Breakpoint mixins */
+
+@mixin for-mobile-layout {
+    @media (max-width: $break-narrow) {
+      @content;
+    }
+  }
+  
+  @mixin for-narrow-layout {
+    @media (min-width: $break-narrow) {
+      @content;
+    }
+  }
+  
+  @mixin for-normal-layout {
+    @media (min-width: $break-normal) {
+      @content;
+    }
+  }
+  
+  @mixin for-wide-layout {
+    @media (min-width: $break-wide) {
+      @content;
+    }
+  }
+  
+  @mixin layoutGTC($max) {
+    grid-template-columns:
+      minmax($layoutPadding, 1fr)
+      minmax(auto, $max)
+      minmax($layoutPadding, 1fr);
+  }
+
+  // Text
+  @mixin projTitle{
+    font-size: em(24px,14px);
+    line-height: lh(32px , 14px);
+    font-family: poppins;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    color: var(--primary-text-color);
+  }
+  @mixin btnTxt{
+    font-size: 1rem;
+    line-height: lh(24px , 14px);
+    font-family: figtree;
+    font-weight: 400;
+    color: #fff;
+  }
+  @mixin taskTxt{
+    font-size: 1rem;
+    line-height: lh(23px , 14px);
+    font-family: figtree;
+    font-weight: 400;
+    color: var(--primary-text-color);
+  }
