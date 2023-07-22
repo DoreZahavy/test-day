@@ -3,21 +3,19 @@
         <!-- render group labels by labels array -->
 
         <section class="labels-grid">
-            <div v-for="label in labels" :key="label">{{ label }}</div>
+            <div class="d-cmp-label" v-for="label in labels" :key="label">{{ label }}</div>
         </section>
 
         <!-- render tasks by cmp order -->
-        <Container>
-
-            <section v-for="task in group.tasks" :key="task.id">
+        <Container :get-child-payload="getChildPayload" group-name="1" @drop="onDropTask(idx, $event)">
+            <Draggable  v-for="task in group.tasks" :key="task.id">
                 <section class="task">
                     <section class="d-cmp" v-for="(cmp, idx) in cmpOrder" :key="idx">
                         <component :is="cmp" :info="task[cmp]"></component>
                     </section>
                 </section>
-            </section>
+            </Draggable>
         </Container>
-
         <!-- render progress by progress array -->
         <!-- <section class="progress-grid">
             <div v-for="(item, idx) in progress" :key="idx">{{ item }}</div>
@@ -41,9 +39,8 @@ import Status from "@/components/dynamicCmps/Status.vue";
 import Priority from "@/components/dynamicCmps/Priority.vue";
 export default {
 
-    props: ['group'],
+    props: ['group', 'idx'],
     created() {
-        // console.log(this.tasks);
     },
     data() {
         return {
@@ -56,24 +53,16 @@ export default {
         };
     },
     methods: {
-        onDrop(dropResult) {
-            this.groups = this.applyDrag(this.groups, dropResult);
+        onDropTask(idx, dropResult) {
+            console.log('dropResult:', dropResult)
+
+            this.$store.commit({ type: 'applyDragTask', idx, dragResult: dropResult })
         },
-        applyDrag(arr, dragResult) {
-            const { removedIndex, addedIndex, payload } = dragResult;
-
-            if (removedIndex === null && addedIndex === null) return arr;
-            const result = [...arr];
-            let itemToAdd = payload;
-
-            if (removedIndex !== null) {
-                itemToAdd = result.splice(removedIndex, 1)[0];
-            }
-            if (addedIndex !== null) {
-                result.splice(addedIndex, 0, itemToAdd);
-            }
-            return result;
+        getChildPayload(index) {
+            return this.group.tasks[index]
         }
+
+
     },
     components: {
         Side,
@@ -104,7 +93,8 @@ export default {
     }
 }
 
-.d-cmp {
+.d-cmp,
+.d-cmp-label {
     &:nth-child(1) {
         position: sticky;
         z-index: 10;
