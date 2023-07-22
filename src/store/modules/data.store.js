@@ -16,10 +16,11 @@ export const dataStore = {
   },
 
   mutations: {
-  
-    applyDragGrp(state,{ dragResult}) {
+
+    applyDragGrp(state, { dragResult }) {
       const arr = state.groups
       const { removedIndex, addedIndex, payload } = dragResult;
+      console.log(removedIndex, addedIndex, payload)
 
       if (removedIndex === null && addedIndex === null) return arr;
       const result = [...arr];
@@ -33,7 +34,7 @@ export const dataStore = {
       }
       state.groups = result
     },
-    applyDragTask(state,{idx, dragResult}) {
+    applyDragTask(state, { idx, dragResult }) {
       const arr = state.groups[idx].tasks
       const { removedIndex, addedIndex, payload } = dragResult;
 
@@ -54,6 +55,6 @@ export const dataStore = {
 
   actions: {
 
- 
+
   },
 }
