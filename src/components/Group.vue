@@ -1,22 +1,23 @@
 <template>
     <section class="group-list">
         <!-- render group labels by labels array -->
-
-        <section class="labels-grid">
-            <div class="d-cmp-label" v-for="label in labels" :key="label">{{ label }}</div>
-        </section>
+        <!-- <Container orientation="horizontal" @drop="onDropCmp"> -->
+            <section class="labels-grid">
+                <!-- <Draggable v-for="label in labels" :key="label"> -->
+                    <div v-for="label in labels" :key="label" class="d-cmp-label">{{ label }}</div>
+                <!-- </Draggable> -->
+            </section>
+        <!-- </Container> -->
 
         <!-- render tasks by cmp order -->
         <Container :get-child-payload="getChildPayload" group-name="1" @drop="onDropTask(idx, $event)">
             <Draggable v-for="task in group.tasks" :key="task.id">
                 <section class="task">
-                    <Container @drop="onDropCmp">
-                        <Draggable v-for="(cmp, idx) in cmpOrder" :key="idx">
-                            <section class="d-cmp">
-                                <component :is="cmp" :info="task[cmp]"></component>
-                            </section>
-                        </Draggable>
-                    </Container>
+
+                    <section v-for="(cmp, idx) in cmpOrder" :key="idx" class="d-cmp">
+                        <component :is="cmp" :info="task[cmp]"></component>
+                    </section>
+
                 </section>
             </Draggable>
         </Container>
@@ -49,14 +50,17 @@ export default {
     computed: {
         cmpOrder() {
             return this.$store.getters.cmpOrder
-        }
+        },
+        labels() {
+            return this.$store.getters.labels
+        },
     },
     data() {
         return {
             // labelsPrint: [],
 
             // cmpOrder: ["side", "tasktTitle", "status", "priority", "members", "date"],
-            labels: [null, "task", "status", "priority", "members", "date"],
+            // labels: [null, "task", "status", "priority", "members", "date"],
             // labels: ["groupName", null, "status", "members", "priority", "date"],
             // progress: [null, null, "status", null, "priority", null],
         };
@@ -91,7 +95,7 @@ export default {
 <style lang="scss">
 .task {
     border-left: 1px solid black;
-
+    // position: relative;
     background: white;
     display: grid;
     grid-template-columns: 33px 308px repeat(4, 150px);

@@ -6,6 +6,7 @@ export const dataStore = {
   state() {
     return {
       groups: groupService.getGroups(),
+      labels: [null, "task", "status", "priority", "members", "date"],
       cmpOrder: ["side", "tasktTitle", "status", "priority", "members", "date"],
 
     }
@@ -16,6 +17,9 @@ export const dataStore = {
     },
     cmpOrder({cmpOrder}){
       return cmpOrder
+    },
+    labels({labels}){
+      return labels
     }
     
 
@@ -55,6 +59,22 @@ export const dataStore = {
         result.splice(addedIndex, 0, itemToAdd);
       }
       state.groups[idx].tasks = result
+    },
+    applyDragCmp(state, {  dragResult }) {
+      const arr = state.cmpOrder
+      const { removedIndex, addedIndex, payload } = dragResult;
+
+      if (removedIndex === null && addedIndex === null) return arr;
+      const result = [...arr];
+      let itemToAdd = payload;
+
+      if (removedIndex !== null) {
+        itemToAdd = result.splice(removedIndex, 1)[0];
+      }
+      if (addedIndex !== null) {
+        result.splice(addedIndex, 0, itemToAdd);
+      }
+      state.cmpOrder = result
     },
 
   },
