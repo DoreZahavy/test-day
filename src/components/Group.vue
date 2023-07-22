@@ -8,11 +8,15 @@
 
         <!-- render tasks by cmp order -->
         <Container :get-child-payload="getChildPayload" group-name="1" @drop="onDropTask(idx, $event)">
-            <Draggable  v-for="task in group.tasks" :key="task.id">
+            <Draggable v-for="task in group.tasks" :key="task.id">
                 <section class="task">
-                    <section class="d-cmp" v-for="(cmp, idx) in cmpOrder" :key="idx">
-                        <component :is="cmp" :info="task[cmp]"></component>
-                    </section>
+                    <Container @drop="onDropCmp">
+                        <Draggable v-for="(cmp, idx) in cmpOrder" :key="idx">
+                            <section class="d-cmp">
+                                <component :is="cmp" :info="task[cmp]"></component>
+                            </section>
+                        </Draggable>
+                    </Container>
                 </section>
             </Draggable>
         </Container>
@@ -42,11 +46,16 @@ export default {
     props: ['group', 'idx'],
     created() {
     },
+    computed: {
+        cmpOrder() {
+            return this.$store.getters.cmpOrder
+        }
+    },
     data() {
         return {
             // labelsPrint: [],
 
-            cmpOrder: ["side", "tasktTitle", "status", "priority", "members", "date"],
+            // cmpOrder: ["side", "tasktTitle", "status", "priority", "members", "date"],
             labels: [null, "task", "status", "priority", "members", "date"],
             // labels: ["groupName", null, "status", "members", "priority", "date"],
             // progress: [null, null, "status", null, "priority", null],
@@ -54,9 +63,12 @@ export default {
     },
     methods: {
         onDropTask(idx, dropResult) {
-            console.log('dropResult:', dropResult)
 
             this.$store.commit({ type: 'applyDragTask', idx, dragResult: dropResult })
+        },
+        onDropCmp(dropResult) {
+            this.$store.commit({ type: 'applyDragCmp', dragResult: dropResult })
+
         },
         getChildPayload(index) {
             return this.group.tasks[index]
