@@ -5,13 +5,19 @@ export const dataStore = {
   strict: true,
   state() {
     return {
-      groups: groupService.getGroups()
+      groups: groupService.getGroups(),
+      cmpOrder: ["side", "tasktTitle", "status", "priority", "members", "date"],
+
     }
   },
   getters: {
     groups({ groups }) {
       return groups;
     },
+    cmpOrder({cmpOrder}){
+      return cmpOrder
+    }
+    
 
   },
 

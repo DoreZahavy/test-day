@@ -4,7 +4,7 @@ const groups = [
       color: "red",
       tasks: [
         {
-          id: "t101",
+          id: "sdfss",
           side: "null",
           tasktTitle: "learn CSS",
           members: [
@@ -17,7 +17,7 @@ const groups = [
           priority: "LOW",
         },
         {
-          id: "t102",
+          id: "dfhdfh",
           side: "null",
           tasktTitle: "learn vue",
           members: [
@@ -30,7 +30,7 @@ const groups = [
           priority: "LOW",
         },
         {
-          id: "t103",
+          id: "ffgkj",
           side: "null",
           tasktTitle: "learn js",
           members: [
@@ -94,7 +94,7 @@ const groups = [
       color: "green",
       tasks: [
         {
-          id: "t101",
+          id: "nerny",
           side: "null",
           tasktTitle: "Driver license",
           members: [
@@ -107,7 +107,7 @@ const groups = [
           priority: "LOW",
         },
         {
-          id: "t102",
+          id: "tytr",
           side: "null",
           tasktTitle: "walk the dog",
           members: [
@@ -120,7 +120,7 @@ const groups = [
           priority: "LOW",
         },
         {
-          id: "t103",
+          id: "ngfxz",
           side: "null",
           tasktTitle: "coding power",
           members: [
