@@ -2,13 +2,15 @@
     <section class="group-list">
         <!-- render group labels by labels array -->
 
-        <section class="labels-grid">
-            <div class="d-cmp-label" v-for="label in labels" :key="label">{{ label }}</div>
-        </section>
+        <Container @drop="onDropLabel($event)" class="labels-grid" orientation="horizontal" behaviour="contain">
+            <Draggable v-for="(label, idx) in labels" :key="idx" class="d-cmp-label">
+                <div class="d-cmp-label">{{ label }}</div>
+            </Draggable>
+        </Container>
 
         <!-- render tasks by cmp order -->
-        <Container :get-child-payload="getChildPayload" group-name="1" @drop="onDropTask(idx, $event)">
-            <Draggable  v-for="task in group.tasks" :key="task.id">
+        <Container :get-child-payload="getTaskChildPayload" group-name="1" @drop="onDropTask(idx, $event)">
+            <Draggable v-for="task in group.tasks" :key="task.id">
                 <section class="task">
                     <section class="d-cmp" v-for="(cmp, idx) in cmpOrder" :key="idx">
                         <component :is="cmp" :info="task[cmp]"></component>
@@ -44,25 +46,26 @@ export default {
     },
     data() {
         return {
-            // labelsPrint: [],
-
-            cmpOrder: ["side", "tasktTitle", "status", "priority", "members", "date"],
-            labels: [null, "task", "status", "priority", "members", "date"],
-            // labels: ["groupName", null, "status", "members", "priority", "date"],
-            // progress: [null, null, "status", null, "priority", null],
         };
+    },
+    computed: {
+        labels() {
+            return this.$store.getters.labels
+        },
+        cmpOrder() {
+            return this.$store.getters.cmpOrder
+        }
     },
     methods: {
         onDropTask(idx, dropResult) {
-            console.log('dropResult:', dropResult)
-
             this.$store.commit({ type: 'applyDragTask', idx, dragResult: dropResult })
         },
-        getChildPayload(index) {
+        onDropLabel(dropResult) {
+            this.$store.commit({ type: 'applyDragHeader', dragResult: dropResult })
+        },
+        getTaskChildPayload(index) {
             return this.group.tasks[index]
         }
-
-
     },
     components: {
         Side,
@@ -86,7 +89,8 @@ export default {
     height: var(--row-height);
     align-items: center;
 
-    /* grid-template-columns: 2% 200px 1fr 1fr 1fr 1fr; */
+    grid-template-columns: 6.6% 200px 1fr 1fr 1fr 1fr;
+
     /* justify-content: center; */
     &:hover {
         background-color: var(--task-hover);
@@ -95,6 +99,9 @@ export default {
 
 .d-cmp,
 .d-cmp-label {
+
+    // border: 1px solid black;
+
     &:nth-child(1) {
         position: sticky;
         z-index: 10;
@@ -105,7 +112,12 @@ export default {
     &:nth-child(2) {
         position: sticky;
         z-index: 10;
+        margin-left: -80px;
         left: var(--row-height);
+    }
+
+    &:nth-child(5) {
+        margin-left: -165px;
     }
 }
 
@@ -113,7 +125,7 @@ export default {
 .labels-grid,
 .progress-grid {
     width: 100%;
-    background: red;
+    background: rgba(197, 188, 188, 0.59);
     display: grid;
     grid-template-columns: 33px 308px repeat(4, 150px);
 

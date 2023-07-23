@@ -2,26 +2,26 @@
 import { groupService } from "@/services/group.service.js";
 import Group from '@/components/Group.vue'
 import { Container, Draggable } from "vue3-smooth-dnd"
-export default{
-  data(){
+export default {
+  data() {
     return {
       // groups:[]
     }
   },
-  computed:{
-    groups(){
+  computed: {
+    groups() {
       return this.$store.getters.groups
     }
   },
   components: {
     Group,
-    Container, 
+    Container,
     Draggable
   },
-  created(){
+  created() {
   },
-  methods:{
-    onDropGrp(dropResult){
+  methods: {
+    onDropGrp(dropResult) {
       this.$store.commit({ type: 'applyDragGrp', dragResult: dropResult })
     },
   }
@@ -30,14 +30,14 @@ export default{
 
 <template>
   <Container @drop="onDropGrp" class="groups">
-    <Draggable class="grp-scroll" v-for="(group,idx) in groups" :key="group">
+    <Draggable class="grp-scroll" v-for="(group, idx) in groups" :key="group">
       <Group :group="group" :idx="idx"></Group>
     </Draggable>
   </Container>
 </template>
 
 <style>
-.grp-scroll{
+.grp-scroll {
   overflow-y: scroll;
 }
 </style>
