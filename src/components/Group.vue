@@ -12,9 +12,11 @@
         <Container :get-child-payload="getTaskChildPayload" group-name="1" @drop="onDropTask(idx, $event)">
             <Draggable v-for="task in group.tasks" :key="task.id">
                 <section class="task">
-                    <section class="d-cmp" v-for="(cmp, idx) in cmpOrder" :key="idx">
+
+                    <section v-for="(cmp, idx) in cmpOrder" :key="idx" class="d-cmp">
                         <component :is="cmp" :info="task[cmp]"></component>
                     </section>
+
                 </section>
             </Draggable>
         </Container>
@@ -44,6 +46,14 @@ export default {
     props: ['group', 'idx'],
     created() {
     },
+    computed: {
+        cmpOrder() {
+            return this.$store.getters.cmpOrder
+        },
+        labels() {
+            return this.$store.getters.labels
+        },
+    },
     data() {
         return {
         };
@@ -59,6 +69,10 @@ export default {
     methods: {
         onDropTask(idx, dropResult) {
             this.$store.commit({ type: 'applyDragTask', idx, dragResult: dropResult })
+        },
+        onDropCmp(dropResult) {
+            this.$store.commit({ type: 'applyDragCmp', dragResult: dropResult })
+
         },
         onDropLabel(dropResult) {
             this.$store.commit({ type: 'applyDragHeader', dragResult: dropResult })
@@ -82,7 +96,7 @@ export default {
 <style lang="scss">
 .task {
     border-left: 1px solid black;
-
+    // position: relative;
     background: white;
     display: grid;
     grid-template-columns: 33px 308px repeat(4, 150px);
