@@ -1,29 +1,29 @@
 import { groupService } from "@/services/group.service.js";
 
-
 export const dataStore = {
   strict: true,
   state() {
     return {
       groups: groupService.getGroups(),
       cmpOrder: ["side", "tasktTitle", "status", "priority", "members", "date"],
-
+      labels: [null, "task", "status", "priority", "members", "date"]
     }
   },
+
   getters: {
     groups({ groups }) {
       return groups;
     },
-    cmpOrder({cmpOrder}){
-      return cmpOrder
+    cmpOrder({ cmpOrder }) {
+      return cmpOrder;
+    },
+    labels({ labels }) {
+      return labels;
     }
-    
-
   },
 
   mutations: {
-  
-    applyDragGrp(state,{ dragResult}) {
+    applyDragGrp(state, { dragResult }) {
       const arr = state.groups
       const { removedIndex, addedIndex, payload } = dragResult;
 
@@ -39,7 +39,29 @@ export const dataStore = {
       }
       state.groups = result
     },
-    applyDragTask(state,{idx, dragResult}) {
+    applyDragHeader(state, { dragResult }) {
+      const cmpArr = [...state.cmpOrder];
+      const labelArr = [...state.labels];
+
+      const { removedIndex, addedIndex } = dragResult;
+
+      if (removedIndex === null && addedIndex === null) return;
+
+      let itemToAddCmp = cmpArr[removedIndex];
+      let itemToAddLabel = labelArr[removedIndex];
+
+      if (removedIndex !== null) {
+        cmpArr.splice(removedIndex, 1);
+        labelArr.splice(removedIndex, 1);
+      }
+      if (addedIndex !== null) {
+        cmpArr.splice(addedIndex, 0, itemToAddCmp);
+        labelArr.splice(addedIndex, 0, itemToAddLabel);
+      }
+      state.cmpOrder = cmpArr;
+      state.labels = labelArr;
+    },
+    applyDragTask(state, { idx, dragResult }) {
       const arr = state.groups[idx].tasks
       const { removedIndex, addedIndex, payload } = dragResult;
 
@@ -55,11 +77,8 @@ export const dataStore = {
       }
       state.groups[idx].tasks = result
     },
-
   },
 
   actions: {
-
- 
   },
 }
