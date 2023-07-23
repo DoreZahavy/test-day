@@ -70,10 +70,6 @@ export default {
         onDropTask(idx, dropResult) {
             this.$store.commit({ type: 'applyDragTask', idx, dragResult: dropResult })
         },
-        onDropCmp(dropResult) {
-            this.$store.commit({ type: 'applyDragCmp', dragResult: dropResult })
-
-        },
         onDropLabel(dropResult) {
             this.$store.commit({ type: 'applyDragHeader', dragResult: dropResult })
         },
@@ -149,7 +145,6 @@ export default {
 
 .group-list {
     margin-top: 2em;
-    overflow-y: scroll;
 
 
 
