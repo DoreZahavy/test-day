@@ -1,6 +1,6 @@
 <script>
-import { groupService } from "@/services/group.service.js";
-import Group from '@/components/Group.vue'
+import { boardService } from "@/services/board.service.js";
+import Group from '@/cmps/Group.vue'
 import { Container, Draggable } from "vue3-smooth-dnd"
 export default {
   data() {

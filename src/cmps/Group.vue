@@ -35,30 +35,18 @@
    -->
 <script>
 import { Container, Draggable } from "vue3-smooth-dnd"
-import TasktTitle from "@/components/dynamicCmps/TaskTitle.vue";
-import Side from "@/components/dynamicCmps/Side.vue";
-import Members from "@/components/dynamicCmps/Members.vue";
-import Date from "@/components/dynamicCmps/Date.vue";
-import Status from "@/components/dynamicCmps/Status.vue";
-import Priority from "@/components/dynamicCmps/Priority.vue";
+import TasktTitle from "@/cmps/dynamicCmps/TaskTitle.vue";
+import Side from "@/cmps/dynamicCmps/Side.vue";
+import Members from "@/cmps/dynamicCmps/Members.vue";
+import Date from "@/cmps/dynamicCmps/Date.vue";
+import Status from "@/cmps/dynamicCmps/Status.vue";
+import Priority from "@/cmps/dynamicCmps/Priority.vue";
 export default {
 
     props: ['group', 'idx'],
     created() {
     },
-    computed: {
-        cmpOrder() {
-            return this.$store.getters.cmpOrder
-        }
-    },
-    computed: {
-        cmpOrder() {
-            return this.$store.getters.cmpOrder
-        },
-        labels() {
-            return this.$store.getters.labels
-        },
-    },
+ 
     data() {
         return {
         };

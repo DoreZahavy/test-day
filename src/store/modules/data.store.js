@@ -1,10 +1,10 @@
-import { groupService } from "@/services/group.service.js";
+import { boardService } from "@/services/board.service.js";
 
 export const dataStore = {
   strict: true,
   state() {
     return {
-      groups: groupService.getGroups(),
+      groups: boardService.getGroups(),
       cmpOrder: ["side", "tasktTitle", "status", "priority", "members", "date"],
       labels: [null, "task", "status", "priority", "members", "date"]
     }

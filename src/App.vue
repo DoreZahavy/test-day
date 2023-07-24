@@ -1,21 +1,33 @@
 <script>
-import { RouterLink, RouterView } from 'vue-router'
+import AppHeader from '@/cmps/AppHeader.vue'
+import Sidebar from '@/cmps/Sidebar.vue'
+import UserMsg from '@/cmps/UserMsg.vue'
+
+
+export default {
+
+  created() {
+
+  },
+  components: {
+    AppHeader,
+    UserMsg,
+    Sidebar
+  },
+}
 </script>
 
 <template>
   <header>
 
     <div class="wrapper">
-
-      <nav class="main-nav">
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/login">login</RouterLink>
-      </nav>
+      <AppHeader />
+      <Sidebar />
+      <RouterView />
+      <UserMsg />
     </div>
   </header>
 
-  <RouterView />
 </template>
 
 <style scoped></style>

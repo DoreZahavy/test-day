@@ -5,7 +5,7 @@
   </template>
   
   <script>
-  import MemberPreview from "@/components/MemberPreview.vue";
+  import MemberPreview from "@/cmps/MemberPreview.vue";
   export default {
     name: "members",
     emits: ["update"],

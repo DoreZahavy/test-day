@@ -138,7 +138,7 @@ const groups = [
   },
 ]
 
-export const groupService = {
+export const boardService = {
   getGroups
 }
 
